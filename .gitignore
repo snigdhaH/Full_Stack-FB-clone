@@ -1,0 +1,8 @@
+#ignore tailwind output
+tailwind/tailwind.css
+
+#ignorw node_modules if using npm
+node_modules/
+
+#macOS system files
+.DS_Store
