@@ -15,21 +15,29 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// Test creating a user (you can remove this part later after testing)
-User.create({
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'john.doe@example.com',
-  password: 'password123'
-}).then(user => {
-  console.log('User created:', user);
-}).catch(err => {
-  console.error('Error creating user:', err);
-});
 
 // Define a route for the root URL
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  const { firstName, lastName } = req.query;
+
+  if (!firstName || !lastName) {
+    return res.status(400).send("Please provide both firstName and lastName as query parameters.");
+  }
+
+  User.create({
+    firstName: firstName,
+    lastName: lastName,
+    email: "john.doe@example.com", // Placeholder email
+    password: "password123", // Placeholder password
+  })
+    .then((user) => {
+      console.log("User created:", user);
+      res.send(`User created: ${user.firstName} ${user.lastName}`);
+    })
+    .catch((err) => {
+      console.error("Error creating user:", err);
+      res.status(500).send("Error creating user.");
+    });
 });
 
 // Start the server

@@ -1,6 +1,6 @@
 // to define a simple User model:
 
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../database');  // Import the Sequelize instance
 
 const User = sequelize.define('User', {
@@ -26,8 +26,5 @@ const User = sequelize.define('User', {
   // Optional: Some configuration options
   timestamps: true,  // Automatically add createdAt and updatedAt fields
 });
-
-// Sync the model with the database (creates the table if it doesn't exist)
-User.sync();
 
 module.exports = User;
