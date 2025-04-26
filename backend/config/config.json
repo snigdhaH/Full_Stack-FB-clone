@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "my-secret-pw",
+    "database": "facebook_clone",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "my-secret-pw",
+    "database": "facebook_clone",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "my-secret-pw",
+    "database": "facebook_clone",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
