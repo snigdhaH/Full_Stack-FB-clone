@@ -1,23 +1,18 @@
-
+require('dotenv').config({ path: '../.env' }); // This line is crucial for loading .env variables
 const Sequelize = require('sequelize');
-const config = require('./config');  // Import the config to get the connection details
+const config = require('./config'); // Correct path: config.js is a sibling
 
-// Set up Sequelize to connect to MySQL via Docker
 const sequelize = new Sequelize(config.database, config.username, config.password, {
   host: config.host,
+  port: config.port,
   dialect: config.dialect,
-  logging: false, // Disable SQL query logging
+  logging: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
 });
-
-// Authenticate the connection to the database
-sequelize.authenticate()
-  .then(() => {
-    console.log("Database connection successful");
-
-    User.sync({force: false});
-  })
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  });
 
 module.exports = sequelize;
