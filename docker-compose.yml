@@ -1,0 +1,28 @@
+version: '3.8' # Docker Compose file format version
+services:
+  db: # This is the name of your database service
+    image: mysql:8.0 # Use the official MySQL 8.0 image
+    container_name: fb_clone_mysql_db # A custom name for your container
+    environment: # Environment variables passed to the MySQL container
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} # Loaded from .env file
+      MYSQL_DATABASE: ${DB_NAME} # Loaded from .env file
+      MYSQL_USER: ${DB_USER} # Loaded from .env file
+      MYSQL_PASSWORD: ${DB_PASSWORD} # Loaded from .env file
+    ports:
+      - "3306:3306" # Maps port 3306 on your host machine to port 3306 inside the container
+                     # This allows your Node.js backend (running on host) to connect to MySQL
+    volumes:
+      - db_data:/var/lib/mysql # This persists your database data even if the container is removed
+    healthcheck: # Checks if the database is ready before other services try to connect
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks: # Connects this service to a custom network
+      - app_network
+
+networks:
+  app_network: # Define a custom network
+    driver: bridge
+
+volumes:
+  db_data: # Define the named volume for data persistence
